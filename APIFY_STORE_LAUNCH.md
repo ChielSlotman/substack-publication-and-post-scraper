@@ -59,7 +59,7 @@ substack, newsletter, newsletter scraper, substack scraper, content research, co
 
 ## Pricing
 
-Recommended launch pricing:
+Configured launch pricing:
 
 ```text
 Pricing model: Pay per event
@@ -67,9 +67,12 @@ Event name: public-post-result
 Event title: Public post result
 Price: $0.0025 per result
 Buyer framing: $2.50 per 1,000 public post results
+Primary event: public-post-result
+Actor start event: apify-actor-start at $0.00005
+Platform usage charged separately to users: no
 ```
 
-The code already calls `Actor.pushData(finalResults, 'public-post-result')`, so Apify can charge one event per dataset row after monetization is enabled.
+The code calls `Actor.pushData(finalResults, 'public-post-result')`, so Apify charges one `public-post-result` event per pushed dataset row. The automatic default dataset item event was removed from pricing to avoid double-charging dataset rows.
 
 ## Responsible use position
 
@@ -79,24 +82,25 @@ Use this positioning consistently in the Store copy and support replies:
 This Actor extracts publicly visible Substack publication and post information for research, content monitoring, and analysis. It does not log in, bypass paywalls, scrape paid subscriber-only content, collect private user data, or access login-only pages. Paid or preview-only posts are returned only with publicly visible preview data and are marked as preview_only.
 ```
 
-## Launch blocker
+## Publication status
 
-Apify Console currently shows monetization as blocked because billing details and a payment method are not set for the organization. The "Set up monetization" button is disabled until that account setup is completed.
+Monetization is active in Apify Console as of 2026-05-29.
 
-Do not publish this Actor as free first. The Apify publish dialog states that if monetization is added after publishing, it can take 14 days for paid pricing changes to become effective.
+- Pricing model: Pay per event
+- Primary event: `public-post-result`
+- Public post result price: `$0.0025`
+- Actor start event: `apify-actor-start` at `$0.00005`
+- The Actor is still private until `Publish on Store` is completed.
 
-## Publish sequence after billing is enabled
+## Publish sequence
 
 1. Open the Actor publication tab:
    `https://console.apify.com/organization/PsRG5Th2xygCZgJxh/actors/kdADonDMGZ5jUPcRj/publication`
-2. Open `Monetization`.
-3. Select pay-per-event pricing.
-4. Add event `public-post-result` at `$0.0025`.
-5. Confirm the sample input uses a public publication URL and returns a non-empty dataset.
-6. Publish on Store and accept the Apify Store terms.
-7. Verify the public Store page:
+2. Confirm the sample input uses a public publication URL and returns a non-empty dataset.
+3. Publish on Store and accept the Apify Store terms.
+4. Verify the public Store page:
    `https://apify.com/esrok/substack-publication-and-post-scraper`
-8. Run the Store Actor once from the public page and confirm the dataset has public Substack rows.
+5. Run the Store Actor once from the public page and confirm the dataset has public Substack rows.
 
 ## Last verified smoke test
 

@@ -108,7 +108,7 @@ This Actor extracts publicly visible Substack publication and post information f
 - Export CSV, JSON, and Excel to confirm spreadsheet-ready output.
 - Confirm `RUN_SUMMARY` appears in the key-value store.
 - Review responsible-use copy in README and Store listing.
-- Add pay-per-event pricing with the `public-post-result` event.
+- Confirm pay-per-event pricing is active with the `public-post-result` event.
 - Publish as a commercial Apify Store Actor.
 
 ## Version 2 roadmap
