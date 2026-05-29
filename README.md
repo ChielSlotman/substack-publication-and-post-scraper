@@ -273,6 +273,7 @@ Create an Apify schedule and set a date filter or process only new dataset rows 
 
 - Confirm Actor name: `substack-publication-and-post-scraper`
 - Confirm Store title: `Substack Publication and Post Scraper`
+- Review [APIFY_STORE_LAUNCH.md](APIFY_STORE_LAUNCH.md) for the exact Store copy, pricing event, publish sequence, and current monetization blocker
 - Run a smoke test with `examples/local-smoke-input.json`
 - Verify dataset columns in the Apify Output tab
 - Export CSV, JSON, and Excel to confirm spreadsheet-ready fields
