@@ -10,7 +10,6 @@ This file captures the exact launch settings for `esrok/substack-publication-and
 - Console URL: `https://console.apify.com/organization/PsRG5Th2xygCZgJxh/actors/kdADonDMGZ5jUPcRj`
 - GitHub URL: `https://github.com/ChielSlotman/substack-publication-and-post-scraper`
 - Public Store URL after publishing: `https://apify.com/esrok/substack-publication-and-post-scraper`
-- Listing proof: `LISTING_PROOF.md`
 
 ## Store listing
 
