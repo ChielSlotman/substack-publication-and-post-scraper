@@ -6,7 +6,7 @@ This file captures the exact launch settings for `esrok/substack-publication-and
 
 - Actor: `esrok/substack-publication-and-post-scraper`
 - Actor ID: `kdADonDMGZ5jUPcRj`
-- Latest build: `1.0.2`
+- Latest build: `1.0.3`
 - Console URL: `https://console.apify.com/organization/PsRG5Th2xygCZgJxh/actors/kdADonDMGZ5jUPcRj`
 - GitHub URL: `https://github.com/ChielSlotman/substack-publication-and-post-scraper`
 - Public Store URL after publishing: `https://apify.com/esrok/substack-publication-and-post-scraper`
@@ -102,10 +102,14 @@ Do not publish this Actor as free first. The Apify publish dialog states that if
 
 Cloud smoke test passed with 2 dataset rows using `examples/local-smoke-input.json`.
 
-- Run: `https://console.apify.com/actors/kdADonDMGZ5jUPcRj/runs/UybPBCaPckC2kOr13`
-- Dataset: `https://console.apify.com/storage/datasets/QXJm5uVZ67hw6j5fz`
+- Run: `https://console.apify.com/actors/kdADonDMGZ5jUPcRj/runs/aKEY7iaz6vLs316tk`
+- Dataset: `https://console.apify.com/storage/datasets/QUvbD883hv9PtL5U1`
+- Build: `1.0.3`
 - Result status: `partial`
 - Public rows pushed: `2`
 - Preview-only rows: `1`
 - Unavailable rows: `0`
 
+GitHub CI passed after adding the validation workflow.
+
+- Workflow run: `https://github.com/ChielSlotman/substack-publication-and-post-scraper/actions/runs/26656436846`
