@@ -1,0 +1,17 @@
+{
+  "publicationUrls": [
+    "https://astralcodexten.substack.com",
+    "https://newsletter.pragmaticengineer.com"
+  ],
+  "postUrls": [
+    "https://www.astralcodexten.com/p/book-review-the-dialectical-imagination"
+  ],
+  "maxPostsPerPublication": 25,
+  "includePostText": true,
+  "includeExcerpt": true,
+  "includeAuthorInfo": true,
+  "includePublicationInfo": true,
+  "dateFrom": null,
+  "dateTo": null,
+  "deduplicateResults": true
+}

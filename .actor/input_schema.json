@@ -1,0 +1,152 @@
+{
+  "title": "Substack Publication and Post Scraper input",
+  "description": "Extract public Substack publication, author, and post data from publication URLs and direct post URLs. The Actor only collects publicly visible information and does not use login sessions or bypass paywalls.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "publicationUrls": {
+      "title": "Publication URLs",
+      "type": "array",
+      "description": "One or more public Substack publication URLs. The Actor reads the public publication page and public RSS feed, then opens public post pages for metadata and optional article text.",
+      "editor": "stringList",
+      "prefill": [
+        "https://astralcodexten.substack.com"
+      ],
+      "example": [
+        "https://astralcodexten.substack.com",
+        "https://newsletter.pragmaticengineer.com"
+      ],
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "postUrls": {
+      "title": "Direct post URLs",
+      "type": "array",
+      "description": "Optional direct public Substack post URLs. Use this when you already know the exact posts to extract.",
+      "editor": "stringList",
+      "prefill": [],
+      "example": [
+        "https://www.astralcodexten.com/p/book-review-the-dialectical-imagination"
+      ],
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "maxPostsPerPublication": {
+      "title": "Max posts per publication",
+      "type": "integer",
+      "description": "Maximum number of public posts to collect from each publication feed.",
+      "editor": "number",
+      "default": 25,
+      "prefill": 25,
+      "example": 50,
+      "minimum": 1,
+      "maximum": 500
+    },
+    "includePostText": {
+      "title": "Include public post text",
+      "type": "boolean",
+      "description": "When enabled, include the publicly visible article body or public preview text. Paid subscriber-only content is not accessed.",
+      "editor": "checkbox",
+      "default": true,
+      "prefill": true,
+      "example": true
+    },
+    "includeExcerpt": {
+      "title": "Include excerpts",
+      "type": "boolean",
+      "description": "Include public excerpts from RSS feeds or page metadata when available.",
+      "editor": "checkbox",
+      "default": true,
+      "prefill": true,
+      "example": true
+    },
+    "includeAuthorInfo": {
+      "title": "Include author info",
+      "type": "boolean",
+      "description": "Include publicly visible author names and author profile URLs when available.",
+      "editor": "checkbox",
+      "default": true,
+      "prefill": true,
+      "example": true
+    },
+    "includePublicationInfo": {
+      "title": "Include publication info",
+      "type": "boolean",
+      "description": "Include publication name, URL, description, logo, and visible topic/category fields when available.",
+      "editor": "checkbox",
+      "default": true,
+      "prefill": true,
+      "example": true
+    },
+    "dateFrom": {
+      "title": "Date from",
+      "type": "string",
+      "description": "Optional start date filter. Posts published before this date are skipped.",
+      "editor": "datepicker",
+      "nullable": true,
+      "example": "2026-01-01"
+    },
+    "dateTo": {
+      "title": "Date to",
+      "type": "string",
+      "description": "Optional end date filter. Posts published after this date are skipped.",
+      "editor": "datepicker",
+      "nullable": true,
+      "example": "2026-12-31"
+    },
+    "deduplicateResults": {
+      "title": "Deduplicate results",
+      "type": "boolean",
+      "description": "Remove duplicate posts across publication feeds and direct post URLs using normalized post URLs.",
+      "editor": "checkbox",
+      "default": true,
+      "prefill": true,
+      "example": true
+    },
+    "maxConcurrency": {
+      "title": "Maximum concurrency",
+      "type": "integer",
+      "description": "Maximum number of public post pages fetched at the same time. Lower this if a publication responds slowly.",
+      "editor": "number",
+      "default": 5,
+      "minimum": 1,
+      "maximum": 10,
+      "sectionCaption": "Advanced options",
+      "sectionDescription": "The defaults are tuned for moderate, responsible public-page collection."
+    },
+    "requestTimeoutSecs": {
+      "title": "Request timeout",
+      "type": "integer",
+      "description": "Maximum seconds to wait for each public Substack page or feed request.",
+      "editor": "number",
+      "default": 30,
+      "minimum": 10,
+      "maximum": 120
+    },
+    "maxRetries": {
+      "title": "Request retries",
+      "type": "integer",
+      "description": "Number of retries for temporary network or HTTP failures.",
+      "editor": "number",
+      "default": 2,
+      "minimum": 0,
+      "maximum": 5
+    },
+    "saveDebugHtml": {
+      "title": "Save debug HTML",
+      "type": "boolean",
+      "description": "Save fetched post HTML to the key-value store for troubleshooting. Keep disabled for normal runs.",
+      "editor": "checkbox",
+      "default": false
+    }
+  },
+  "required": [
+    "maxPostsPerPublication"
+  ]
+}

@@ -1,0 +1,325 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "properties": {
+      "publicationName": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Publication name",
+        "description": "Public Substack publication name when available.",
+        "example": "Astral Codex Ten"
+      },
+      "publicationUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Publication URL",
+        "description": "Canonical public publication URL.",
+        "example": "https://www.astralcodexten.com"
+      },
+      "publicationDescription": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Publication description",
+        "description": "Public publication description from page metadata or RSS feed.",
+        "example": "P(A|B) = [P(A)*P(B|A)]/P(B), all the rest is commentary."
+      },
+      "publicationLogo": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Publication logo",
+        "description": "Public logo or icon URL when available.",
+        "example": "https://substackcdn.com/image/fetch/..."
+      },
+      "publicationTopic": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Publication topic",
+        "description": "Visible topic or category when available.",
+        "example": "Technology"
+      },
+      "postTitle": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Post title",
+        "description": "Public post title.",
+        "example": "Book Review: The Dialectical Imagination"
+      },
+      "postUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Post URL",
+        "description": "Canonical public Substack post URL.",
+        "example": "https://www.astralcodexten.com/p/book-review-the-dialectical-imagination"
+      },
+      "postSlug": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Post slug",
+        "description": "Slug parsed from the post URL.",
+        "example": "book-review-the-dialectical-imagination"
+      },
+      "authorName": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Author name",
+        "description": "Public author name when available.",
+        "example": "Scott Alexander"
+      },
+      "authorUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Author URL",
+        "description": "Public author profile URL when available.",
+        "example": "https://substack.com/@author"
+      },
+      "publishedAt": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Published at",
+        "description": "Public publication date as an ISO timestamp when available.",
+        "example": "2026-05-29T15:01:57.859Z"
+      },
+      "updatedAt": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Updated at",
+        "description": "Public modified timestamp when available.",
+        "example": "2026-05-29T16:10:00.000Z"
+      },
+      "excerpt": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Excerpt",
+        "description": "Public excerpt from RSS or page metadata when enabled and available.",
+        "example": "A public excerpt from the Substack post."
+      },
+      "publicPostText": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Public post text",
+        "description": "Publicly visible post body or public preview text when includePostText is enabled.",
+        "example": "The visible article body text..."
+      },
+      "isPaidPreview": {
+        "type": "boolean",
+        "title": "Paid preview",
+        "description": "True when the public page appears to be a paid or preview-only post.",
+        "example": false
+      },
+      "isPubliclyReadable": {
+        "type": "boolean",
+        "title": "Publicly readable",
+        "description": "True when the page appears to expose a full public post body without a paid-preview prompt.",
+        "example": true
+      },
+      "accessStatus": {
+        "type": "string",
+        "title": "Access status",
+        "description": "Public access classification: public, preview_only, or unavailable.",
+        "example": "public"
+      },
+      "likesCount": {
+        "type": [
+          "number",
+          "null"
+        ],
+        "title": "Likes",
+        "description": "Visible likes count when it can be read from the public page.",
+        "example": 120
+      },
+      "commentsCount": {
+        "type": [
+          "number",
+          "null"
+        ],
+        "title": "Comments",
+        "description": "Visible comments count when it can be read from the public page.",
+        "example": 14
+      },
+      "imageUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Image URL",
+        "description": "Public post image URL when available.",
+        "example": "https://substackcdn.com/image/fetch/..."
+      },
+      "tags": {
+        "type": "array",
+        "title": "Tags",
+        "description": "Public tags or categories when available.",
+        "items": {
+          "type": "string"
+        },
+        "example": [
+          "AI",
+          "Research"
+        ]
+      },
+      "sourceInputUrl": {
+        "type": [
+          "string",
+          "null"
+        ],
+        "title": "Source input URL",
+        "description": "Original input URL that produced the result.",
+        "example": "https://astralcodexten.substack.com"
+      },
+      "scrapedAt": {
+        "type": "string",
+        "title": "Scraped at",
+        "description": "ISO timestamp when this Actor created the record.",
+        "example": "2026-05-29T12:00:00.000Z"
+      }
+    },
+    "required": [
+      "postUrl",
+      "isPaidPreview",
+      "isPubliclyReadable",
+      "accessStatus",
+      "sourceInputUrl",
+      "scrapedAt"
+    ]
+  },
+  "views": {
+    "overview": {
+      "title": "Substack posts",
+      "description": "Clean table of public Substack publication and post data.",
+      "transformation": {
+        "fields": [
+          "publicationName",
+          "postTitle",
+          "postUrl",
+          "authorName",
+          "publishedAt",
+          "accessStatus",
+          "isPaidPreview",
+          "isPubliclyReadable",
+          "excerpt",
+          "publicPostText",
+          "likesCount",
+          "commentsCount",
+          "imageUrl",
+          "tags",
+          "publicationUrl",
+          "publicationDescription",
+          "publicationLogo",
+          "publicationTopic",
+          "postSlug",
+          "authorUrl",
+          "updatedAt",
+          "sourceInputUrl",
+          "scrapedAt"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "publicationName": {
+            "label": "Publication",
+            "format": "text"
+          },
+          "postTitle": {
+            "label": "Post title",
+            "format": "text"
+          },
+          "postUrl": {
+            "label": "Post URL",
+            "format": "link"
+          },
+          "authorName": {
+            "label": "Author",
+            "format": "text"
+          },
+          "publishedAt": {
+            "label": "Published",
+            "format": "date"
+          },
+          "accessStatus": {
+            "label": "Access",
+            "format": "text"
+          },
+          "isPaidPreview": {
+            "label": "Paid preview",
+            "format": "boolean"
+          },
+          "isPubliclyReadable": {
+            "label": "Public",
+            "format": "boolean"
+          },
+          "likesCount": {
+            "label": "Likes",
+            "format": "number"
+          },
+          "commentsCount": {
+            "label": "Comments",
+            "format": "number"
+          },
+          "imageUrl": {
+            "label": "Image",
+            "format": "image"
+          },
+          "tags": {
+            "label": "Tags",
+            "format": "array"
+          },
+          "publicationUrl": {
+            "label": "Publication URL",
+            "format": "link"
+          },
+          "publicationLogo": {
+            "label": "Logo",
+            "format": "image"
+          },
+          "authorUrl": {
+            "label": "Author URL",
+            "format": "link"
+          },
+          "updatedAt": {
+            "label": "Updated",
+            "format": "date"
+          },
+          "sourceInputUrl": {
+            "label": "Input URL",
+            "format": "link"
+          },
+          "scrapedAt": {
+            "label": "Scraped",
+            "format": "date"
+          }
+        }
+      }
+    }
+  }
+}

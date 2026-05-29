@@ -1,0 +1,15 @@
+{
+  "publicationUrls": [
+    "https://astralcodexten.substack.com"
+  ],
+  "postUrls": [],
+  "maxPostsPerPublication": 2,
+  "includePostText": false,
+  "includeExcerpt": true,
+  "includeAuthorInfo": true,
+  "includePublicationInfo": true,
+  "deduplicateResults": true,
+  "maxConcurrency": 2,
+  "requestTimeoutSecs": 30,
+  "maxRetries": 1
+}

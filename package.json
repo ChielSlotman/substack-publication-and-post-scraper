@@ -1,0 +1,36 @@
+{
+  "name": "substack-publication-and-post-scraper",
+  "version": "1.0.0",
+  "description": "Commercial Apify Actor for extracting public Substack publication, author, and post data for research, monitoring, and AI workflows.",
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "node --test tests/*.test.js",
+    "lint": "node scripts/validate-json.js && node --check src/main.js && node --check src/substack.js && node --check src/text.js"
+  },
+  "dependencies": {
+    "apify": "^3.7.2",
+    "cheerio": "^1.2.0",
+    "fast-xml-parser": "^5.8.0"
+  },
+  "overrides": {
+    "file-type": "22.0.1"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "keywords": [
+    "apify",
+    "actor",
+    "substack",
+    "newsletter",
+    "posts",
+    "publication",
+    "scraper",
+    "monitor",
+    "research",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT"
+}

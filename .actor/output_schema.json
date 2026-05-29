@@ -1,0 +1,18 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "Substack public post results",
+  "properties": {
+    "posts": {
+      "type": "string",
+      "title": "Posts",
+      "description": "Clean public Substack publication and post records matching the input URLs and filters.",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    },
+    "runSummary": {
+      "type": "string",
+      "title": "Run summary",
+      "description": "Run status, counts, warnings, and post access classifications.",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/RUN_SUMMARY"
+    }
+  }
+}
