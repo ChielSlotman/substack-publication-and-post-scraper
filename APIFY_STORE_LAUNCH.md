@@ -112,4 +112,14 @@ Cloud smoke test passed with 2 dataset rows using `examples/local-smoke-input.js
 
 GitHub CI passed after adding the validation workflow.
 
-- Workflow run: `https://github.com/ChielSlotman/substack-publication-and-post-scraper/actions/runs/26656436846`
+- Workflow run: `https://github.com/ChielSlotman/substack-publication-and-post-scraper/actions/runs/26656523996`
+
+## API verification runs
+
+The Actor was tested three times through the Apify API with small public inputs.
+
+| Test | Run | Dataset | Result |
+| --- | --- | --- | --- |
+| Publication URL, no post text | `https://console.apify.com/actors/kdADonDMGZ5jUPcRj/runs/nWLxA0DxLA5ECLlV8` | `https://console.apify.com/storage/datasets/84aGlIle7i2H0SGAd` | `SUCCEEDED`, 1 item, `RUN_SUMMARY.status=ok` |
+| Direct post URL, no post text | `https://console.apify.com/actors/kdADonDMGZ5jUPcRj/runs/6wW8oFE29joDsKyBJ` | `https://console.apify.com/storage/datasets/Fb0F3XY6ZgQpLNefn` | `SUCCEEDED`, 1 item, `RUN_SUMMARY.status=ok` |
+| Publication URL, post text enabled | `https://console.apify.com/actors/kdADonDMGZ5jUPcRj/runs/TwqGB6oOgAleuRMVg` | `https://console.apify.com/storage/datasets/JAG0LeVX5NPd1dxRd` | `SUCCEEDED`, 1 item, `publicPostText` returned 52,635 characters |
