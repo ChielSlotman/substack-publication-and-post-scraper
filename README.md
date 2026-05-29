@@ -171,7 +171,7 @@ From Apify Console, open a run, go to Dataset, and choose Export. You can also f
 Run the Actor through the Apify API:
 
 ```bash
-curl "https://api.apify.com/v2/acts/YOUR_USERNAME~substack-publication-and-post-scraper/runs?token=YOUR_APIFY_TOKEN" \
+curl "https://api.apify.com/v2/acts/esrok~substack-publication-and-post-scraper/runs?token=YOUR_APIFY_TOKEN" \
   -H "Content-Type: application/json" \
   -d @examples/input.json
 ```
@@ -210,10 +210,10 @@ The Actor does not use login sessions. It reads public RSS feeds and public post
 
 Suggested commercial Store pricing:
 
-- Pay per result: `$1.50` to `$3.00` per 1,000 public posts scraped
-- Alternative event pricing: `$0.002` to `$0.005` per public post result
+- Pay per event: `$0.002` to `$0.003` per public post result
+- Equivalent buyer framing: `$2.00` to `$3.00` per 1,000 public posts scraped
 
-Pay per result is simple for buyers because value maps directly to usable post records. Keep `includePostText` available by default for AI workflows, and use moderate `maxPostsPerPublication` values for efficient runs.
+The Actor is prepared for Apify pay-per-event monetization using the `public-post-result` charge event. Pay per result is simple for buyers because value maps directly to usable post records. Keep `includePostText` available by default for AI workflows, and use moderate `maxPostsPerPublication` values for efficient runs.
 
 ## Limitations
 
@@ -281,7 +281,7 @@ Create an Apify schedule and set a date filter or process only new dataset rows 
 - Test date filters
 - Review `RUN_SUMMARY` after a successful run
 - Review responsible-use copy before publishing
-- Add paid pricing in Apify Console
+- Add pay-per-event pricing in Apify Console with the `public-post-result` event
 - Publish as a commercial Apify Store Actor
 
 ## Development

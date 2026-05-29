@@ -14,14 +14,23 @@ import {
 
 await Actor.init();
 
+const PAY_PER_RESULT_EVENT = 'public-post-result';
+
 const startedAt = new Date();
 const scrapedAt = startedAt.toISOString();
 const rawInput = await Actor.getInput();
 const input = normalizeInput(rawInput || {});
+const chargingManager = Actor.getChargingManager();
+const pricingInfo = chargingManager.getPricingInfo();
+const isPayPerResultEnabled = pricingInfo.isPayPerEvent
+  && Object.prototype.hasOwnProperty.call(pricingInfo.perEventPrices, PAY_PER_RESULT_EVENT);
 const stats = {
   startedAt: startedAt.toISOString(),
   finishedAt: null,
   status: 'running',
+  pricingModel: pricingInfo.pricingModel || null,
+  chargeEventName: PAY_PER_RESULT_EVENT,
+  payPerResultEnabled: isPayPerResultEnabled,
   publicationUrls: input.publicationUrls,
   postUrls: input.postUrls,
   publicationsProcessed: 0,
@@ -29,8 +38,10 @@ const stats = {
   postCandidatesFound: 0,
   postPagesFetched: 0,
   postsPushed: 0,
+  chargedResultEvents: 0,
   duplicatesSkipped: 0,
   postsFilteredByDate: 0,
+  postsSkippedByChargeLimit: 0,
   unavailablePosts: 0,
   previewOnlyPosts: 0,
   warnings: [],
@@ -47,6 +58,8 @@ log.info('Starting Substack public publication and post scrape', {
   dateFrom: input.dateFrom?.toISOString?.() || null,
   dateTo: input.dateTo?.toISOString?.() || null,
   maxConcurrency: input.maxConcurrency,
+  pricingModel: stats.pricingModel,
+  payPerResultEnabled: stats.payPerResultEnabled,
 });
 
 const candidates = [];
@@ -105,12 +118,28 @@ for (const candidate of candidates) {
   dedupedCandidates.push(candidate);
 }
 
-log.info(`Fetching ${dedupedCandidates.length} public Substack post pages`, {
+let candidatesToFetch = dedupedCandidates;
+
+if (isPayPerResultEnabled) {
+  const chargeableResults = chargingManager.calculateMaxEventChargeCountWithinLimit(PAY_PER_RESULT_EVENT);
+  if (Number.isFinite(chargeableResults) && chargeableResults < candidatesToFetch.length) {
+    stats.postsSkippedByChargeLimit = candidatesToFetch.length - chargeableResults;
+    candidatesToFetch = candidatesToFetch.slice(0, chargeableResults);
+    log.warning('Run charge limit reached before all candidate posts could be fetched', {
+      requestedPosts: dedupedCandidates.length,
+      chargeableResults,
+      skippedPosts: stats.postsSkippedByChargeLimit,
+    });
+  }
+}
+
+log.info(`Fetching ${candidatesToFetch.length} public Substack post pages`, {
   duplicatesSkipped: stats.duplicatesSkipped,
   filteredByDate: stats.postsFilteredByDate,
+  skippedByChargeLimit: stats.postsSkippedByChargeLimit,
 });
 
-const results = await mapLimit(dedupedCandidates, input.maxConcurrency, async (candidate) => {
+const results = await mapLimit(candidatesToFetch, input.maxConcurrency, async (candidate) => {
   try {
     const response = await fetchPublicResource(candidate.postUrl, input, {
       label: `post ${candidate.postUrl}`,
@@ -157,10 +186,20 @@ const finalResults = results
   .filter((result) => result.postUrl || result.postTitle);
 
 if (finalResults.length) {
-  await Actor.pushData(finalResults);
+  const chargeResult = await Actor.pushData(finalResults, PAY_PER_RESULT_EVENT);
+  stats.chargedResultEvents = chargeResult.chargedCount || 0;
+
+  if (chargeResult.eventChargeLimitReached) {
+    const warning = 'Run charge limit was reached while pushing result rows.';
+    stats.warnings.push(warning);
+    log.warning(warning, {
+      requestedResults: finalResults.length,
+      chargedResultEvents: stats.chargedResultEvents,
+    });
+  }
 }
 
-stats.postsPushed = finalResults.length;
+stats.postsPushed = isPayPerResultEnabled ? stats.chargedResultEvents : finalResults.length;
 stats.finishedAt = new Date().toISOString();
 
 if (!finalResults.length && stats.warnings.length) {

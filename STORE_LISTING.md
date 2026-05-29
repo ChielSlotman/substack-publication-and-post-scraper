@@ -81,15 +81,15 @@ Use it to build public newsletter datasets, monitor competitor publications, pow
 
 ## Suggested pricing
 
-Start with pay per result:
+Start with pay per event:
 
-- `$1.50` to `$3.00` per 1,000 public posts scraped
+- `$0.002` to `$0.003` per public post result
 
-Alternative event pricing:
+Buyer-facing equivalent:
 
-- `$0.002` to `$0.005` per public post result
+- `$2.00` to `$3.00` per 1,000 public posts scraped
 
-Pay per result is easy for buyers to understand and maps directly to usable dataset rows. The Actor uses static HTTP requests instead of browser automation, which helps keep compute costs low.
+Use the `public-post-result` charge event. Pay per result is easy for buyers to understand and maps directly to usable dataset rows. The Actor uses static HTTP requests instead of browser automation, which helps keep compute costs low.
 
 ## Responsible use note
 
@@ -108,7 +108,7 @@ This Actor extracts publicly visible Substack publication and post information f
 - Export CSV, JSON, and Excel to confirm spreadsheet-ready output.
 - Confirm `RUN_SUMMARY` appears in the key-value store.
 - Review responsible-use copy in README and Store listing.
-- Add paid pricing.
+- Add pay-per-event pricing with the `public-post-result` event.
 - Publish as a commercial Apify Store Actor.
 
 ## Version 2 roadmap
