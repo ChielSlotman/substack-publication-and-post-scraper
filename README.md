@@ -1,5 +1,7 @@
 # Substack Publication and Post Scraper
 
+[![CI](https://github.com/ChielSlotman/substack-publication-and-post-scraper/actions/workflows/ci.yml/badge.svg)](https://github.com/ChielSlotman/substack-publication-and-post-scraper/actions/workflows/ci.yml)
+
 Extract clean public Substack publication, author, and post data for research, content monitoring, competitor analysis, market research, and AI workflows.
 
 This Apify Actor reads public Substack publication pages, public RSS feeds, and public post pages. It does not log in, bypass paywalls, scrape private subscriber-only content, or collect hidden private data. If a post is paid or preview-only, the Actor returns only the publicly visible preview information and marks it as `preview_only`.
