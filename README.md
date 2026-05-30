@@ -2,6 +2,8 @@
 
 Extract clean public Substack posts, article text, author names, publication metadata, dates, images, tags, and engagement counts. Built for AI summaries, newsletter research, market intelligence, and competitor content monitoring.
 
+Best for AI builders, researchers, agencies, newsletter operators, and content teams who need clean public Substack data without manual copying.
+
 Substack Publication and Post Scraper turns public Substack publication URLs and post URLs into a structured dataset you can export, analyze, summarize, or send into automation workflows.
 
 It does not log in, bypass paywalls, scrape subscriber-only content, or collect hidden private data. If a post is paid or preview-only, the Actor returns only the publicly visible preview information and marks it as `preview_only`.
@@ -38,7 +40,7 @@ Use it when you want:
 - Build AI content datasets from public Substack posts
 - Feed public article text into RAG pipelines or summarization workflows
 - Monitor public posts from newsletters in a niche
-- Track competitor content and publishing frequency
+- Track competitor newsletters and monitor what top writers in your niche are publishing
 - Research authors, publications, topics, and market narratives
 - Export public newsletter data to CSV, Excel, JSON, or API
 - Send new public posts to Make, Zapier, n8n, Google Sheets, Airtable, Notion, Slack, or custom systems
