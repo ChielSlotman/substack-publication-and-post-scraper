@@ -9,7 +9,7 @@ This file captures the exact launch settings for `esrok/substack-publication-and
 - Latest build: `1.0.4`
 - Console URL: `https://console.apify.com/organization/PsRG5Th2xygCZgJxh/actors/kdADonDMGZ5jUPcRj`
 - GitHub URL: `https://github.com/ChielSlotman/substack-publication-and-post-scraper`
-- Public Store URL after publishing: `https://apify.com/esrok/substack-publication-and-post-scraper`
+- Public Store URL: `https://apify.com/esrok/substack-publication-and-post-scraper`
 
 ## Store listing
 
@@ -90,19 +90,26 @@ Monetization is active in Apify Console as of 2026-05-29.
 - Primary event: `public-post-result`
 - Public post result price: `$0.0025`
 - Actor start event: `apify-actor-start` at `$0.00005`
-- The Actor is still private until `Publish on Store` is completed.
+- Published on Apify Store.
+- Public Store URL: `https://apify.com/esrok/substack-publication-and-post-scraper`
 
-## Publish sequence
+## Post-publish verification
 
-1. Open the Actor publication tab:
-   `https://console.apify.com/organization/PsRG5Th2xygCZgJxh/actors/kdADonDMGZ5jUPcRj/publication`
-2. Confirm the sample input uses a public publication URL and returns a non-empty dataset.
-3. Publish on Store and accept the Apify Store terms.
-4. Verify the public Store page:
+1. Verify the public Store page:
    `https://apify.com/esrok/substack-publication-and-post-scraper`
-5. Run the Store Actor once from the public page and confirm the dataset has public Substack rows.
+2. Run the Store Actor once from the public page and confirm the dataset has public Substack rows.
+3. Confirm the public README does not include internal launch notes or builder-only checklists.
 
 ## Last verified smoke test
+
+Post-publish API smoke test passed on build `1.0.4`.
+
+- Run: `https://console.apify.com/actors/kdADonDMGZ5jUPcRj/runs/VQ64WOJxZF0X4KMDl`
+- Dataset: `https://console.apify.com/storage/datasets/gkN7xNYhC4HYej9bc`
+- Result status: `SUCCEEDED`
+- Public rows pushed: `1`
+- First result: `Book Review: The Dialectical Imagination`
+- Access status: `public`
 
 Cloud smoke test passed with 2 dataset rows using `examples/local-smoke-input.json`.
 
