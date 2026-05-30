@@ -198,7 +198,7 @@ You can use the results with:
 
 Example API run:
 
-```bash
+```text
 curl "https://api.apify.com/v2/acts/esrok~substack-publication-and-post-scraper/runs?token=YOUR_APIFY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -210,7 +210,7 @@ curl "https://api.apify.com/v2/acts/esrok~substack-publication-and-post-scraper/
 
 Read dataset items after the run finishes:
 
-```bash
+```text
 curl "https://api.apify.com/v2/datasets/DATASET_ID/items?format=json&clean=true&token=YOUR_APIFY_TOKEN"
 ```
 
