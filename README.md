@@ -1,46 +1,52 @@
 # Substack Publication and Post Scraper
 
-[![CI](https://github.com/ChielSlotman/substack-publication-and-post-scraper/actions/workflows/ci.yml/badge.svg)](https://github.com/ChielSlotman/substack-publication-and-post-scraper/actions/workflows/ci.yml)
+Extract clean public Substack posts, article text, author names, publication metadata, dates, images, tags, and engagement counts. Built for AI summaries, newsletter research, market intelligence, and competitor content monitoring.
 
-Extract clean public Substack publication, author, and post data for research, content monitoring, competitor analysis, market research, and AI workflows.
+Substack Publication and Post Scraper turns public Substack publication URLs and post URLs into a structured dataset you can export, analyze, summarize, or send into automation workflows.
 
-This Apify Actor reads public Substack publication pages, public RSS feeds, and public post pages. It does not log in, bypass paywalls, scrape private subscriber-only content, or collect hidden private data. If a post is paid or preview-only, the Actor returns only the publicly visible preview information and marks it as `preview_only`.
+It does not log in, bypass paywalls, scrape subscriber-only content, or collect hidden private data. If a post is paid or preview-only, the Actor returns only the publicly visible preview information and marks it as `preview_only`.
 
 ## What this Actor does
 
-Substack Publication and Post Scraper lets you enter one or more Substack publication URLs and/or direct post URLs and receive spreadsheet-ready data in the default Apify dataset.
+Enter one or more public Substack publication URLs or direct post URLs. The Actor reads public publication pages, public RSS feeds, and public post pages, then returns spreadsheet-ready rows in the Apify dataset.
 
 It can extract:
 
 - Publication name, URL, description, logo, and visible topic/category
 - Post title, URL, slug, dates, excerpt, image, tags, and public article text
 - Public author name and author profile URL when visible
-- Visible likes and comments counts when readable from the public page
+- Visible likes and comments counts when available on the public page
 - Public access status: `public`, `preview_only`, or `unavailable`
-- Source input URL and scrape timestamp for every row
+- Source input URL and scrape timestamp for every result
 
-## Who it is for
+## Why use it
 
-- AI builders collecting public posts for summaries, RAG, and research datasets
-- Content marketers researching newsletters and creators
-- Agencies tracking public competitor content
-- Researchers studying niche writers, media markets, or publication frequency
-- Founders monitoring industry narratives and market trends
-- Newsletter operators analyzing comparable publications
-- Apify, Make, Zapier, n8n, Google Sheets, and API users building automations
+This Actor focuses on public-only, no-login Substack extraction with clean spreadsheet-ready output and simple pricing per result.
 
-## Main use cases
+It is designed for users who want a reliable dataset, not a messy scrape. Each result is shaped for CSV, Excel, JSON, API usage, AI content datasets, RAG pipelines, newsletter monitoring, and automated summaries.
 
-- Extract public posts from one or more Substack publications
-- Build a dataset of public newsletter articles
-- Monitor public posts from specific newsletters
-- Research competitors in a niche
-- Collect public content for AI summarization workflows
-- Export Substack data to CSV, JSON, Excel, or API
-- Track publishing frequency, authors, URLs, and topics
-- Discover useful public authors and publications
+Use it when you want:
+
+- Clean output columns that are easy to filter in a spreadsheet
+- Public article text for AI summaries and research workflows
+- A simple input form for publication URLs and post URLs
+- Clear labeling for public, preview-only, and unavailable posts
+- A responsible public-data scraper that avoids private or paid content
+
+## Use cases
+
+- Build AI content datasets from public Substack posts
+- Feed public article text into RAG pipelines or summarization workflows
+- Monitor public posts from newsletters in a niche
+- Track competitor content and publishing frequency
+- Research authors, publications, topics, and market narratives
+- Export public newsletter data to CSV, Excel, JSON, or API
+- Send new public posts to Make, Zapier, n8n, Google Sheets, Airtable, Notion, Slack, or custom systems
+- Support market intelligence, media monitoring, and founder research workflows
 
 ## Input
+
+At least one `publicationUrls` or `postUrls` entry is required.
 
 | Field | Type | Description |
 | --- | --- | --- |
@@ -57,9 +63,38 @@ It can extract:
 | `maxConcurrency` | integer | Advanced option for parallel public post page requests. Default is `5`. |
 | `requestTimeoutSecs` | integer | Advanced request timeout. Default is `30`. |
 | `maxRetries` | integer | Advanced retry count for temporary network errors. Default is `2`. |
-| `saveDebugHtml` | boolean | Save fetched post HTML for troubleshooting. Keep disabled for normal runs. |
 
-At least one `publicationUrls` or `postUrls` entry is required.
+## Output
+
+Each dataset item is one public Substack post record.
+
+| Field | Description |
+| --- | --- |
+| `publicationName` | Public publication name when available |
+| `publicationUrl` | Public publication URL |
+| `publicationDescription` | Public publication description |
+| `publicationLogo` | Public logo/image URL |
+| `publicationTopic` | Visible topic or category when available |
+| `postTitle` | Public post title |
+| `postUrl` | Public post URL |
+| `postSlug` | Post slug parsed from the URL |
+| `authorName` | Public author name when visible |
+| `authorUrl` | Public author URL when visible |
+| `publishedAt` | Published date when available |
+| `updatedAt` | Updated date when available |
+| `excerpt` | Public excerpt when enabled |
+| `publicPostText` | Public article text or public preview text when enabled |
+| `isPaidPreview` | Whether the post appears to be paid/preview-only |
+| `isPubliclyReadable` | Whether public article text was readable |
+| `accessStatus` | `public`, `preview_only`, or `unavailable` |
+| `likesCount` | Visible likes count when available |
+| `commentsCount` | Visible comments count when available |
+| `imageUrl` | Main image URL when visible |
+| `tags` | Visible tags when available |
+| `sourceInputUrl` | Original input URL that led to the result |
+| `scrapedAt` | Timestamp when the row was scraped |
+
+The Actor also writes `RUN_SUMMARY` to the default key-value store with result counts, warnings, and run status.
 
 ## Example input
 
@@ -93,9 +128,7 @@ Direct post example:
 }
 ```
 
-## Output
-
-Each dataset item is one public Substack post record.
+## Example output
 
 ```json
 {
@@ -111,7 +144,7 @@ Each dataset item is one public Substack post record.
   "authorUrl": null,
   "publishedAt": "2026-05-29T15:01:57.000Z",
   "updatedAt": "2026-05-29T15:01:57.859Z",
-  "excerpt": "...",
+  "excerpt": "Public excerpt text...",
   "publicPostText": "The visible public article text or public preview text...",
   "isPaidPreview": false,
   "isPubliclyReadable": true,
@@ -125,37 +158,19 @@ Each dataset item is one public Substack post record.
 }
 ```
 
-The Actor also writes `RUN_SUMMARY` to the default key-value store with counts, warnings, and status. Possible statuses include:
-
-- `ok`: results were collected without warnings
-- `partial`: results were collected, but some posts were preview-only, unavailable, or had warnings
-- `no_results`: the run completed but no matching posts were found
-- `failed_or_empty`: publication or post requests failed and no dataset items were produced
-
 ## How to run
 
-### On Apify
+1. Open the Actor in Apify.
+2. Add one or more public Substack publication URLs or direct post URLs.
+3. Set `maxPostsPerPublication`.
+4. Choose whether to include public post text, excerpts, author info, and publication info.
+5. Add optional date filters if you only want posts from a specific period.
+6. Run the Actor.
+7. Open the Dataset tab to view or export the results.
 
-1. Open the Actor in Apify Console.
-2. Enter one or more public Substack publication URLs or direct post URLs.
-3. Choose `maxPostsPerPublication` and optional date filters.
-4. Run the Actor.
-5. Open the Dataset tab to view, filter, or export results.
+For scheduled monitoring, create an Apify schedule and use date filters or downstream deduplication to process only new rows.
 
-### Locally
-
-```bash
-npm install
-npm start
-```
-
-For local Apify SDK runs, create `storage/key_value_stores/default/INPUT.json` or run with the Apify CLI:
-
-```bash
-npx apify-cli run --purge --input-file examples/local-smoke-input.json
-```
-
-## Exporting results
+## Export and integrations
 
 Apify datasets can be exported as:
 
@@ -166,66 +181,55 @@ Apify datasets can be exported as:
 - XML
 - RSS
 
-From Apify Console, open a run, go to Dataset, and choose Export. You can also fetch results through the Dataset API.
+You can use the results with:
 
-## API usage
+- Apify API
+- Make
+- Zapier
+- n8n
+- Google Sheets
+- Airtable
+- Notion
+- Slack alerts
+- AI summarization tools
+- RAG pipelines and vector databases
 
-Run the Actor through the Apify API:
+Example API run:
 
 ```bash
 curl "https://api.apify.com/v2/acts/esrok~substack-publication-and-post-scraper/runs?token=YOUR_APIFY_TOKEN" \
   -H "Content-Type: application/json" \
-  -d @examples/input.json
+  -d '{
+    "publicationUrls": ["https://astralcodexten.substack.com"],
+    "maxPostsPerPublication": 10,
+    "includePostText": true
+  }'
 ```
 
-After the run finishes, read dataset items:
+Read dataset items after the run finishes:
 
 ```bash
 curl "https://api.apify.com/v2/datasets/DATASET_ID/items?format=json&clean=true&token=YOUR_APIFY_TOKEN"
 ```
 
-Read the run summary:
-
-```bash
-curl "https://api.apify.com/v2/key-value-stores/STORE_ID/records/RUN_SUMMARY?token=YOUR_APIFY_TOKEN"
-```
-
-## Make, Zapier, n8n, and Google Sheets
-
-This Actor is built for automation workflows:
-
-- Schedule it in Apify to monitor public newsletters daily or hourly.
-- Use Apify integrations to trigger Make, Zapier, or n8n after a run finishes.
-- Export the default dataset to Google Sheets.
-- Filter by `publicationName`, `authorName`, `publishedAt`, `accessStatus`, `tags`, or `sourceInputUrl`.
-- Send new public posts to Slack, email, Airtable, Notion, a CRM, or an AI summarization pipeline.
-
-For monitoring, keep `deduplicateResults` enabled and use `dateFrom`/`dateTo` or a scheduled run window.
-
 ## Responsible use
 
-Use this Actor only for public research, content monitoring, and analysis of publicly visible Substack pages. Do not use it to bypass paywalls, access paid subscriber-only content, collect private user data, scrape login-only pages, or violate Substack's terms or any creator's rights.
+Use this Actor only for public research, content monitoring, and analysis of publicly visible Substack pages.
 
-The Actor does not use login sessions. It reads public RSS feeds and public post pages. If a paid post exposes only a preview, the Actor returns only that public preview and marks `accessStatus` as `preview_only`.
+Do not use it to bypass paywalls, access paid subscriber-only content, collect private user data, scrape login-only pages, or violate Substack's terms or creator rights.
 
-## Pricing suggestion
-
-Suggested commercial Store pricing:
-
-- Pay per event: `$0.002` to `$0.003` per public post result
-- Equivalent buyer framing: `$2.00` to `$3.00` per 1,000 public posts scraped
-
-The Actor is prepared for Apify pay-per-event monetization using the `public-post-result` charge event. Pay per result is simple for buyers because value maps directly to usable post records. Keep `includePostText` available by default for AI workflows, and use moderate `maxPostsPerPublication` values for efficient runs.
+The Actor does not use login sessions, cookies, or subscriber accounts. It reads public RSS feeds and public post pages. If a paid post exposes only a preview, the Actor returns only that public preview and marks `accessStatus` as `preview_only`.
 
 ## Limitations
 
 - The Actor only collects data visible on public pages or public RSS feeds.
-- It does not access paid subscriber-only content, private content, drafts, comments behind login, or hidden private APIs.
+- It does not access paid subscriber-only content, private content, drafts, login-only comments, or hidden private APIs.
 - RSS feeds may include only recent posts, depending on the publication.
 - Some fields are `null` when Substack or the publication does not expose them publicly.
 - Likes and comments counts are returned only when visible and parseable from the public page.
 - Custom-domain Substacks are supported when they expose a standard public RSS feed and public post pages.
-- Very large `publicPostText` fields can make CSV/Excel exports heavier.
+- Very large `publicPostText` fields can make CSV and Excel exports heavier.
+- Keyword search and Substack discovery are not included in this version.
 
 ## FAQ
 
@@ -241,13 +245,21 @@ No. The Actor does not use login sessions, cookies, or subscriber accounts.
 
 Yes. Put direct public post URLs in `postUrls`. You can use `publicationUrls`, `postUrls`, or both.
 
-### Why are some fields null?
+### Can I collect full public article text?
 
-Substack does not expose every field on every public page. The Actor returns `null` instead of guessing.
+Yes. Enable `includePostText`. The Actor returns public article text when the post is publicly readable. If the post is preview-only, it returns only the public preview text.
 
 ### Can I use this for AI summaries?
 
-Yes. Enable `includePostText` and send `publicPostText`, `postTitle`, `authorName`, and `postUrl` into your AI workflow.
+Yes. Enable `includePostText` and send `publicPostText`, `postTitle`, `authorName`, `publicationName`, and `postUrl` into your AI workflow.
+
+### Can I use this for RAG pipelines?
+
+Yes. The output is structured JSON, so public post text and metadata can be loaded into vector databases, internal search tools, and retrieval workflows.
+
+### Why are some fields null?
+
+Substack does not expose every field on every public page. The Actor returns `null` instead of guessing.
 
 ### Can I export to Google Sheets?
 
@@ -255,44 +267,8 @@ Yes. Use Apify dataset export, Apify integrations, Make, Zapier, n8n, or the Api
 
 ### How do I monitor new posts?
 
-Create an Apify schedule and set a date filter or process only new dataset rows in your downstream automation. A future version can add stateful "new posts only" mode.
+Create an Apify schedule and process only new dataset rows in your downstream automation. You can also use date filters to limit each run to a recent time window.
 
-## Version 2 ideas
+### Does it search Substack by keyword?
 
-- Scheduled monitoring with "return only new posts since last run"
-- Webhook alert templates
-- RSS-style monitoring output
-- AI topic classification
-- AI summary field
-- Author discovery
-- Newsletter discovery by topic
-- Keyword filtering inside public posts
-- Google Sheets export preset
-- Competitor newsletter tracker
-- Substack trend monitor
-
-## Launch checklist
-
-- Confirm Actor name: `substack-publication-and-post-scraper`
-- Confirm Store title: `Substack Publication and Post Scraper`
-- Review [APIFY_STORE_LAUNCH.md](APIFY_STORE_LAUNCH.md) for the exact Store copy, pricing event, publish sequence, and current monetization blocker
-- Run a smoke test with `examples/local-smoke-input.json`
-- Verify dataset columns in the Apify Output tab
-- Export CSV, JSON, and Excel to confirm spreadsheet-ready fields
-- Test publication URL input and direct post URL input
-- Test `includePostText: true` and `includePostText: false`
-- Test date filters
-- Review `RUN_SUMMARY` after a successful run
-- Review responsible-use copy before publishing
-- Add pay-per-event pricing in Apify Console with the `public-post-result` event
-- Publish as a commercial Apify Store Actor
-
-## Development
-
-```bash
-npm install
-npm test
-npm run lint
-```
-
-The parser has unit tests for input normalization, RSS parsing, public post extraction, paid-preview classification, date filtering, and output shaping.
+Not in this version. This Actor currently accepts publication URLs and post URLs. Keyword search and publication discovery are good candidates for a future version.
