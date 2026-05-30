@@ -137,13 +137,6 @@
       "default": 2,
       "minimum": 0,
       "maximum": 5
-    },
-    "saveDebugHtml": {
-      "title": "Save debug HTML",
-      "type": "boolean",
-      "description": "Save fetched post HTML to the key-value store for troubleshooting. Keep disabled for normal runs.",
-      "editor": "checkbox",
-      "default": false
     }
   },
   "required": [
